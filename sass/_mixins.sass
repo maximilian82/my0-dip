@@ -1,0 +1,164 @@
+//+border-radius-sep(0,0,0,0)
+
+@mixin border-radius-sep ($topLeftRadius: 5px, $topRightRadius: 5px, $bottomLeftRadius: 5px, $bottomRightRadius: 5px)
+	-webkit-border-top-left-radius: $topLeftRadius
+	-webkit-border-top-right-radius: $topRightRadius
+	-webkit-border-bottom-right-radius: $bottomRightRadius
+	-webkit-border-bottom-left-radius: $bottomLeftRadius
+	-moz-border-radius-topleft: $topLeftRadius
+	-moz-border-radius-topright: $topRightRadius
+	-moz-border-radius-bottomright: $bottomRightRadius
+	-moz-border-radius-bottomleft: $bottomLeftRadius
+	border-top-left-radius: $topLeftRadius
+	border-top-right-radius: $topRightRadius
+	border-bottom-right-radius: $bottomRightRadius
+	border-bottom-left-radius: $bottomLeftRadius
+
+@mixin border-radius($radius) 
+	border-radius: $radius
+	-webkit-border-radius: $radius
+	-khtml-border-radius: $radius
+	-moz-border-radius: $radius
+	-ms-border-radius: $radius
+	-o-border-radius: $radius
+	border-radius: $radius
+	background-clip: padding-box  /* stops bg color from leaking outside the border: */
+
+//sample 	@include transition(all, 0.6s, ease-in-out);
+// Transition methods Taken from http://www.w3schools.com/css/css3_transitions.asp
+
+// ease - specifies a transition effect with a slow start, then fast, then end slowly (this is default)
+// linear - specifies a transition effect with the same speed from start to end
+// ease-in - specifies a transition effect with a slow start
+// ease-out - specifies a transition effect with a slow end
+// ease-in-out - specifies a transition effect with a slow start and end
+// cubic-bezier(n,n,n,n) - lets you define your own values in a cubic-bezi
+
+@mixin transition($transition-property, $transition-time, $method) 
+	-webkit-transition: $transition-property $transition-time $method
+	-moz-transition: $transition-property $transition-time $method
+	-ms-transition: $transition-property $transition-time $method
+	-o-transition: $transition-property $transition-time $method
+	transition: $transition-property $transition-time $method
+
+// generic transform
+@mixin transform($transforms) 
+	-moz-transform: $transforms
+	-o-transform: $transforms
+	-ms-transform: $transforms
+	-webkit-transform: $transforms
+	transform: $transforms
+
+// rotate
+@mixin rotate ($deg) 
+	@include transform(rotate(#{$deg}deg))
+// scale
+@mixin scale($scale) 
+	@include transform(scale($scale))
+ 
+// translate
+@mixin translate ($x, $y) 
+	@include transform(translate($x, $y))
+
+// skew
+@mixin skew ($x, $y) 
+	@include transform(skew(#{$x}deg, #{$y}deg))
+
+//transform origin
+@mixin transform-origin ($origin) 
+	moz-transform-origin: $origin
+	-o-transform-origin: $origin
+	-ms-transform-origin: $origin
+	-webkit-transform-origin: $origin
+	transform-origin: $origin
+
+@mixin opacity($opacity) 
+	opacity: $opacity
+	$opacity-ie: $opacity * 100
+	filter: alpha(opacity=$opacity-ie) //IE8
+
+@mixin calc($property, $expression) 
+	#{$property}: -moz-calc(#{$expression})
+	#{$property}: -webkit-calc(#{$expression})
+	#{$property}: calc(#{$expression})
+
+@mixin box-shadow($top: 0, $left: 1px, $blur: 1px, $color: #000, $inset: "")
+	-webkit-box-shadow: $top $left $blur  $color #{$inset}
+	-moz-box-shadow: $top $left $blur  $color #{$inset}
+	box-shadow: $top $left $blur  $color #{$inset}
+	
+
+
+@mixin font-face($style-name, $file, $category:"")
+	$filepath: " ../fonts/" + $file
+	@font-face
+		font-family: "#{$style-name}"
+		src: url($filepath + ".eot?#iefix") format('embedded-opentype'), url($filepath + ".woff") format('woff'),url($filepath + ".woff2") format('woff2') , url($filepath + ".ttf")  format('truetype'), url($filepath + ".svg#" + $style-name + "") format('svg')
+	%#{$style-name}
+		font: 
+			@if $category != "" 
+				family: "#{$style-name}", #{$category}
+
+			@else 
+				family: "#{$style-name}"
+				weight: normal
+
+//my mixins
+
+//@include abs-pos(10px, 10px, 5px, 15px)
+@mixin pos-abs ($top: auto, $right: auto, $bottom: auto, $left: auto) 
+	top: $top
+	right: $right
+	bottom: $bottom
+	left: $left
+	position: absolute
+
+@mixin bgp($name, $x:0, $y:0)
+	background-image: url("../images/#{$name}.png")
+	background-repeat: no-repeat
+	background-position: $x $y
+@mixin bgj($name, $x:0, $y:0)
+	background-image: url("../images/#{$name}.jpg")
+	background-repeat: no-repeat
+	background-position: $x $y
+
+@mixin cen
+	margin-left: auto
+	margin-right: auto	
+
+@mixin vcen
+	position: relative
+	top: 50%
+	transform: perspective(1px) translateY(-50%)
+
+
+@mixin clfx() 
+	&:before,
+	&:after 
+		content: ""
+		display: table
+	&:after	
+		clear: both
+
+@mixin box
+	box-sizing: border-box
+	-moz-box-sizing: border-box
+	-webkit-box-sizing: border-box
+
+%vishidden 
+	margin: -1px
+	padding: 0
+	width: 1px
+	height: 1px
+	overflow: hidden
+	clip: rect(0 0 0 0)
+	clip: rect(0, 0, 0, 0)
+	position: absolute
+
+@mixin e($name, $silent: false)
+	@if $silent == true
+		@extend %#{$name} !optional
+	@else
+		@extend .#{$name} !optional
+
+//last 08.01.2018

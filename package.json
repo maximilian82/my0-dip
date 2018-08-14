@@ -1,0 +1,15 @@
+{
+  "name": "gulp-project",
+  "version": "0.9.1",
+  "description": "Second Revision Gulp Project",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.0.0",
+    "gulp-postcss": "^6.1.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-sourcemaps": "^2.0.0-alpha",
+    "autoprefixer": "^6.4.0",    
+    "browser-sync": "^2.14.0",        
+    "node-bourbon": "^4.2.8"    
+  }
+}
